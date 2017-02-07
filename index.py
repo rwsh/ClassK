@@ -11,11 +11,12 @@ import random
 
 # Загрузка исходных данных из файла
 X = list()
-f = open("a.txt", "r")
+f = open("t.txt", "r")
 for s in f:
     s = s.strip()
     SS = s.split("\t")
     X.append(SS)
+f.close()
 
 # массивы для хранения коэффициентов для нормировки
 As = list()
@@ -46,7 +47,7 @@ for i in range(len(X[0])):
 # создать массив для весов
 W = list()
 
-K = 4 # количество классов
+K = 2 # количество классов
 
 M = len(X) # количество исходных данных
 
@@ -122,10 +123,12 @@ for i in range(len(W)):
 for x in X:
     i_n = FindNear(W, x)[1]
     Data[i_n].append(x)
+    print(i_n)
 
 # напечатать количество элементов в классах
+i = 0
 for d in Data:
-    print(len(d))
+    print("Класс "+i.__str__()+" состоит из "+len(d).__str__()+" элементов")
 
     
     
