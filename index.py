@@ -11,7 +11,7 @@ import random
 
 # Загрузка исходных данных из файла
 X = list()
-f = open("t.txt", "r")
+f = open("dr.txt", "r")
 for s in f:
     s = s.strip()
     SS = s.split("\t")
@@ -129,6 +129,7 @@ for x in X:
 i = 0
 for d in Data:
     print("Класс "+i.__str__()+" состоит из "+len(d).__str__()+" элементов")
+    i = i + 1
 
     
     
