@@ -9,13 +9,20 @@ import math
 
 import random
 
+# имя файла
+name = "t.txt"
+
 # Загрузка исходных данных из файла
 X = list()
-f = open("dr.txt", "r")
+XS = list() # символьные значения
+f = open(name, "r")
+
 for s in f:
     s = s.strip()
     SS = s.split("\t")
     X.append(SS)
+    XS.append(s)
+    
 f.close()
 
 # массивы для хранения коэффициентов для нормировки
@@ -27,6 +34,7 @@ for i in range(len(X[0])):
     M = float(X[0][i])
     m = float(X[0][i])
     for j in range(len(X)):
+        #print("<" + X[j][i].__str__() + ">")
         X[j][i] = float(X[j][i])
         
         if abs(X[j][i]) > M:
@@ -71,8 +79,9 @@ dla = 0.05 # уменьшение коэффициента обучения
 def rho(w, x):
     r = 0
     for i in range(len(w)):
-        r = r + math.sqrt((w[i] - x[i])*(w[i] - x[i]))
+        r = r + (w[i] - x[i])*(w[i] - x[i])
     
+    r = math.sqrt(r)
     return r
 
 # поиск ближайшего вектора 
@@ -113,6 +122,10 @@ for i in range(K):
     
 print(WX) # печать денормированных весов
 
+# печать первых компонент весов
+for wx in WX:
+    print(wx[0])
+
 # создать классы     
 Data = list() 
 
@@ -120,16 +133,34 @@ for i in range(len(W)):
     Data.append(list())
 
 # отнести исходные данные к своему классу    
+DS = list()
+i = 0
 for x in X:
     i_n = FindNear(W, x)[1]
     Data[i_n].append(x)
-    print(i_n)
+    DS.append([i_n, XS[i]])
+    i = i + 1
 
 # напечатать количество элементов в классах
 i = 0
+class_n = list()
 for d in Data:
     print("Класс "+i.__str__()+" состоит из "+len(d).__str__()+" элементов")
+    class_n.append(len(d))
     i = i + 1
+
+class_n.sort()
+print(class_n)
+
+# распечатать по классам
+f = list()
+for i in range(K):
+    f.append(open(i.__str__() + name, "w"))
+for ds in DS:
+    f[ds[0]].write(ds[1])
+    f[ds[0]].write("\n")
+for i in range(K):
+    f[i].close()
 
     
     
